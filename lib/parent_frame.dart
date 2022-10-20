@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:face_feature_detection/image_setter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -49,7 +52,9 @@ class _ParentFrameState extends State<ParentFrame> {
                         final XFile? resp = await _picker.pickImage(
                             source: ImageSource.gallery);
                         if (resp != null) {
-                          print(resp.path);
+                          File file = File(resp.path);
+                          Get.to(
+                              ImageSetter(frame: frames[index], image: file));
                         }
                       },
                       icon: const Icon(
