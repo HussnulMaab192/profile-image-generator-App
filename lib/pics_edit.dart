@@ -1,7 +1,5 @@
 import 'package:face_feature_detection/parent_frame.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 class PicsEdit extends StatefulWidget {
@@ -77,7 +75,7 @@ class _PicsEditState extends State<PicsEdit> {
               ),
             );
           },
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 0,
             crossAxisSpacing: 0,

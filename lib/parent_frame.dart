@@ -1,14 +1,16 @@
 import 'dart:io';
 
 import 'package:face_feature_detection/image_setter.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:flutter/material.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 class ParentFrame extends StatefulWidget {
   final String title;
   final String size;
-  ParentFrame({super.key, required this.size, required this.title});
+  const ParentFrame({super.key, required this.size, required this.title});
 
   @override
   State<ParentFrame> createState() => _ParentFrameState();
@@ -52,9 +54,40 @@ class _ParentFrameState extends State<ParentFrame> {
                         final XFile? resp = await _picker.pickImage(
                             source: ImageSource.gallery);
                         if (resp != null) {
-                          File file = File(resp.path);
-                          Get.to(
-                              ImageSetter(frame: frames[index], image: file));
+                          //  File file = File(resp.path);
+                          //   Get.to(
+                          //       ImageSetter(frame: frames[index], image: file));
+
+                          CroppedFile? croppedFile =
+                              await ImageCropper().cropImage(
+                            cropStyle: CropStyle.circle,
+                            sourcePath: resp.path,
+                            aspectRatioPresets: [
+                              CropAspectRatioPreset.square,
+                              CropAspectRatioPreset.ratio3x2,
+                              CropAspectRatioPreset.original,
+                              CropAspectRatioPreset.ratio4x3,
+                              CropAspectRatioPreset.ratio16x9
+                            ],
+                            uiSettings: [
+                              AndroidUiSettings(
+                                  toolbarTitle: 'Cropper',
+                                  toolbarColor: Colors.deepOrange,
+                                  toolbarWidgetColor: Colors.white,
+                                  initAspectRatio:
+                                      CropAspectRatioPreset.original,
+                                  lockAspectRatio: false),
+                              IOSUiSettings(
+                                title: 'Cropper',
+                              ),
+                              WebUiSettings(
+                                context: context,
+                              ),
+                            ],
+                          );
+                          Get.to(ImageSetter(
+                              frame: frames[index],
+                              image: File(croppedFile!.path)));
                         }
                       },
                       icon: const Icon(

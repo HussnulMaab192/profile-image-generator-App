@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ImageSetter extends StatefulWidget {
   final frame;
@@ -21,34 +22,22 @@ class _ImageSetterState extends State<ImageSetter> {
       appBar: AppBar(
         title: const Text("set your image"),
       ),
-      body: Stack(
-        children: [
-          Center(
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                border: Border.all(),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(widget.frame),
-                ),
-              ),
+      body: Center(
+        child: Container(
+          width: Get.width,
+          height: Get.height,
+          decoration: BoxDecoration(
+            border: Border.all(),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(widget.frame),
             ),
           ),
-          Positioned(
-            top: 320,
-            left: 160,
-            child: CircleAvatar(
-              backgroundColor: Colors.transparent,
-              radius: 42,
-              child: ClipOval(
-                  child: Image.file(
-                widget.image,
-              )),
-            ),
+          // ignore: prefer_const_constructors
+          child: CircleAvatar(
+            backgroundColor: Colors.teal,
           ),
-        ],
+        ),
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
